@@ -1,0 +1,23 @@
+<svg width="132" height="40" viewBox="0 0 132 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="fluxGrad" x1="6.33" y1="33.72" x2="31.28" y2="6.28" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4CAF14"/>
+      <stop offset="1" stop-color="#82FA1E"/>
+    </linearGradient>
+  </defs>
+
+  <!-- badge -->
+  <rect x="3" y="3" width="34" height="34" rx="9.07" fill="#12151A"/>
+
+  <!-- circulating flux ring, open at top to suggest continuous flow -->
+  <path d="M28.01 10.45A12.47 12.47 0 1 1 11.99 10.45" stroke="url(#fluxGrad)" stroke-width="2.49" stroke-linecap="round"/>
+  <!-- arrowheads on the ring ends -->
+  <path d="M28.01 10.45 L31.67 11.61 M28.01 10.45 L29.46 6.91" stroke="url(#fluxGrad)" stroke-width="2.49" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M11.99 10.45 L8.33 9.28 M11.99 10.45 L10.54 13.98" stroke="url(#fluxGrad)" stroke-width="2.49" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- inner pulse / price-flow bolt -->
+  <path d="M13.77 25.1 L17.17 25.1 L18.87 18.3 L22.27 26.8 L26.23 13.77" stroke="#FFFFFF" stroke-width="2.27" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- wordmark: stuck together as one run, same coloring scheme as the original CoinPulse logo -->
+  <text x="44" y="25" font-family="Arial, Helvetica, sans-serif" font-size="15" fill="#FFFFFF"><tspan font-weight="400">Crypto</tspan><tspan font-weight="700">Flux</tspan></text>
+</svg>
