@@ -12,7 +12,7 @@ const Header = () => {
       <div className="main-container inner">
         <Link href="/">
           <Image
-            src="cryptoflux_logo.svg"
+            src="/cryptoflux_logo.svg"
             alt="CryptoFlux Logo"
             width={132}
             height={40}
@@ -34,7 +34,8 @@ const Header = () => {
           <Link
             href="/coins"
             className={cn("nav-link", {
-              "is-active": pathname === "/coins",
+              "is-active":
+                pathname === "/coins" || pathname.startsWith("/coins/"),
             })}
           >
             All Coins
