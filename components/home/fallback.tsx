@@ -1,6 +1,8 @@
 import DataTable from "@/components/DataTable";
 
-const placeholderRows = Array.from({ length: 4 }, (_, index) => ({ id: index + 1 }));
+const placeholderRows = Array.from({ length: 4 }, (_, index) => ({
+  id: index + 1,
+}));
 
 export const CoinOverviewFallback = () => {
   return (
