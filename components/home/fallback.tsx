@@ -29,7 +29,7 @@ export const CoinOverviewFallback = () => {
   );
 };
 
-export const TrendingCoinFallback = () => {
+export const TrendingCoinsFallback = () => {
   const columns: DataTableColumn<{ id: number }>[] = [
     {
       header: "Name",

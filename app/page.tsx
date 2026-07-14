@@ -3,7 +3,7 @@ import CoinOverview from "@/components/home/CoinOverview";
 import TrendingCoins from "@/components/home/TrendingCoins";
 import {
   CoinOverviewFallback,
-  TrendingCoinFallback,
+  TrendingCoinsFallback,
 } from "@/components/home/fallback";
 
 const page = async () => {
@@ -14,7 +14,7 @@ const page = async () => {
           <CoinOverview />
         </Suspense>
 
-        <Suspense fallback={<TrendingCoinFallback />}>
+        <Suspense fallback={<TrendingCoinsFallback />}>
           <TrendingCoins />
         </Suspense>
       </section>
