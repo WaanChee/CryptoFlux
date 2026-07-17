@@ -29,12 +29,13 @@ const CandlestickChart = ({
 
   const [period, setPeriod] = useState(initialPeriod);
   const [ohlcData, setOhlcData] = useState<OHLCData[]>(data ?? []);
+  const [fetchError, setFetchError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
   const fetchOHLCData = async (selectedPeriod: Period) => {
-    try {
-      const { days } = PERIOD_CONFIG[selectedPeriod];
+    const { days } = PERIOD_CONFIG[selectedPeriod];
 
+    try {
       const newData = await fetcher<OHLCData[]>(`/coins/${coinId}/ohlc`, {
         vs_currency: "usd",
         days,
@@ -42,9 +43,10 @@ const CandlestickChart = ({
         precision: "full",
       });
 
-      setOhlcData(newData ?? []);
+      return newData ?? [];
     } catch (e) {
       console.error("Failed to fetch OHLCData", e);
+      throw e;
     }
   };
 
@@ -52,8 +54,14 @@ const CandlestickChart = ({
     if (newPeriod === period) return;
 
     startTransition(async () => {
-      setPeriod(newPeriod);
-      await fetchOHLCData(newPeriod);
+      try {
+        const newData = await fetchOHLCData(newPeriod);
+        setOhlcData(newData);
+        setPeriod(newPeriod);
+        setFetchError(null);
+      } catch {
+        setFetchError("Unable to load chart data for the selected period.");
+      }
     });
   };
 
@@ -127,6 +135,10 @@ const CandlestickChart = ({
         <div className="flex-1">{children}</div>
 
         <div className="button-group">
+          {fetchError ? (
+            <span className="text-xs mr-2 text-red-400">{fetchError}</span>
+          ) : null}
+
           <span className="text-sm mx-2 font-medium text-purple-100/50">
             Period:
           </span>

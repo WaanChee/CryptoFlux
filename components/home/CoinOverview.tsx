@@ -16,7 +16,7 @@ const CoinOverview = async () => {
         days: 1,
         //interval: "hourly", (Only works if uses pro plan, otherwise it will return 400 error)
         precision: "full",
-      }),
+      }).catch(() => [] as OHLCData[]),
     ]);
 
     return (

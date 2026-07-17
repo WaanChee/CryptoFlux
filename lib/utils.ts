@@ -12,19 +12,18 @@ export function formatCurrency(
   currency?: string,
   showSymbol?: boolean
 ) {
-  if (value === null || value === undefined || isNaN(value)) {
-    return showSymbol !== false ? "$0.00" : "0.00";
-  }
+  const normalizedValue =
+    value === null || value === undefined || isNaN(value) ? 0 : value;
 
   if (showSymbol === undefined || showSymbol === true) {
-    return value.toLocaleString(undefined, {
+    return normalizedValue.toLocaleString(undefined, {
       style: "currency",
       currency: currency?.toUpperCase() || "USD",
       minimumFractionDigits: digits ?? 2,
       maximumFractionDigits: digits ?? 2,
     });
   }
-  return value.toLocaleString(undefined, {
+  return normalizedValue.toLocaleString(undefined, {
     minimumFractionDigits: digits ?? 2,
     maximumFractionDigits: digits ?? 2,
   });
