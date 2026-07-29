@@ -2,7 +2,7 @@ import Converter from "@/components/Converter";
 import LiveDataWrapper from "@/components/LiveDataWrapper";
 import { fetcher, getPools } from "@/lib/coingecko.actions";
 import { formatCurrency } from "@/lib/utils";
-import { ArrowUpRight, Link } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 
 const page = async ({ params }: NextPageProps) => {
   const { id } = await params;
@@ -24,7 +24,19 @@ const page = async ({ params }: NextPageProps) => {
     ? coinData.detail_platforms?.[coinData.asset_platform_id]
     : null;
 
-  const network = platform?.geckoterminal_url.split("/")[3] || null;
+  const network = (() => {
+    const url = platform?.geckoterminal_url;
+    if (!url) return null;
+
+    try {
+      const pathname = new URL(url).pathname;
+      const segments = pathname.split("/").filter(Boolean);
+      return segments[0] || null;
+    } catch {
+      return null;
+    }
+  })();
+
   const contractAddress = platform?.contract_address || null;
 
   const pool = await getPools(id, network, contractAddress);
@@ -91,9 +103,9 @@ const page = async ({ params }: NextPageProps) => {
 
                 {link ? (
                   <div className="link">
-                    <Link href={link} target="_blank">
-                      {linkText || label}
-                    </Link>
+                    <a href={link} target="_blank" rel="noreferrer">
+                      {link}
+                    </a>
                     <ArrowUpRight size={16} />
                   </div>
                 ) : (

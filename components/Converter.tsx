@@ -28,6 +28,7 @@ const Convertor = ({ symbol, icon, priceList }: ConverterProps) => {
         <div className="input-wrapper">
           <Input
             type="number"
+            aria-label={`Amount of ${symbol.toUpperCase()}`}
             placeholder="Amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
