@@ -56,7 +56,10 @@ const Convertor = ({ symbol, icon, priceList }: ConverterProps) => {
         <div className="output-wrapper">
           <p>{formatCurrency(convertedPrice, 2, currency, false)}</p>
 
-          <Select value={currency} onValueChange={setCurrency}>
+          <Select
+            value={currency}
+            onValueChange={(value) => setCurrency(value ?? "usd")}
+          >
             <SelectTrigger className="select-trigger" value={currency}>
               <SelectValue placeholder="Select" className="select-value">
                 {currency.toUpperCase()}

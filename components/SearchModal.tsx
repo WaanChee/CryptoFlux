@@ -39,6 +39,7 @@ const SearchItem = ({ coin, onSelect, isActiveName }: SearchItemProps) => {
   return (
     <CommandItem
       value={coin.id}
+      keywords={[coin.name, coin.symbol, coin.id]}
       onSelect={() => onSelect(coin.id)}
       className="search-item"
     >
@@ -103,13 +104,11 @@ export const SearchModal = ({
     [searchQuery]
   );
 
-  // Prefer debouncedQuery, but fall back to current input so we fetch
-  // suggestions while the user is still typing (improves perceived robustness).
-  const searchKey = (debouncedQuery || searchQuery).trim().toLowerCase();
+  const searchKey = debouncedQuery.trim().toLowerCase();
 
   const { data: searchResults = [], isValidating: isSearching } = useSWR<
     SearchCoin[]
-  >(searchKey ? searchKey : null, (query) => searchCoins(query as string), {
+  >(searchKey || null, (query) => searchCoins(query as string), {
     revalidateOnFocus: false,
   });
 
@@ -154,7 +153,7 @@ export const SearchModal = ({
   }, []);
 
   const computeVisibleResults = () => {
-    const query = (debouncedQuery || searchQuery).trim().toLowerCase();
+    const query = debouncedQuery.trim().toLowerCase();
     const source = lastResults.length > 0 ? lastResults : searchResults;
 
     if (!query) return [] as SearchCoin[];
@@ -208,27 +207,6 @@ export const SearchModal = ({
   };
 
   const visibleSearchResults = computeVisibleResults();
-
-  // Fallback: if SWR returned nothing and we're not currently validating,
-  // try a direct client-side fetch once to recover results (helps noisy networks).
-  useEffect(() => {
-    let mounted = true;
-
-    if (searchKey && !isSearching && visibleSearchResults.length === 0) {
-      (async () => {
-        try {
-          const res = await searchCoins(searchKey);
-          if (mounted && res && res.length > 0) setLastResults(res);
-        } catch (e) {
-          // ignore
-        }
-      })();
-    }
-
-    return () => {
-      mounted = false;
-    };
-  }, [searchKey, isSearching]);
 
   useKey(
     (event) =>
