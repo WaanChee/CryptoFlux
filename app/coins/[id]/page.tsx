@@ -12,7 +12,7 @@ const page = async ({ params }: NextPageProps) => {
       dex_pair_format: "contract_address",
     }),
 
-    await fetcher<OHLCData>(`/coins/${id}/ohlc`, {
+    await fetcher<OHLCData[]>(`/coins/${id}/ohlc`, {
       vs_currency: "USD",
       days: 1,
       //interval: "hourly", Only if you have pro subscription of CoinGecko API
